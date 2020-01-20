@@ -1,6 +1,8 @@
 const inquirer = require("inquirer");
 const fs = require("fs");
 const util = require("util");
+const pdf = require('html-pdf');
+const request = require('request');
 
 const writeFileAsync = util.promisify(fs.writeFile);
 
@@ -26,8 +28,6 @@ function promptUser() {
 function gitData(answers){
    var urlGit = 'https://api.github.com/users/' + answers.userName;
 
-   const request = require('request');
-
    const options = {
        url: urlGit,
        method: 'GET',
@@ -41,9 +41,16 @@ function gitData(answers){
    request(options, (error, response, body) => {
      if (!error && response.statusCode == 200) {
         mData = JSON.parse(body);
+        mData.colorChoice = answers.colorChoice;
         mMapLocation = "http://www.google.com/maps/place/" + mData.location;
         const html = generateHTML(mData);
-        return writeFileAsync("index.html", html);
+
+	pdf.create(html, options).toFile('./index.pdf', function(err, res) {
+	if (err) return console.log(err);
+	console.log(res);
+       });
+
+       return writeFileAsync("index.html", html);
      }
    });
 }
@@ -58,14 +65,40 @@ function generateHTML(userData) {
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Profile Generator</title>
 </head>
-</body>
+
+<style>
+  .green {
+      background-color: green;
+      color: white;
+      padding: 10px
+  }
+
+  .blue {
+      background-color: blue;
+      color: white;
+      padding: 10px;
+  }
+
+  .pink {
+      background-color: pink;
+      color: white;
+      padding: 10px
+  }
+
+  .red {
+      background-color: red;
+      color: white;
+      padding: 10px
+  }
+</style>
+
 <body>
     <header>
         <div class="wrapper">
         <img src=${userData.avatar_url} alt="Profile Image" style="width:150px;height:150px;">
         </div>
         <h1>Hi!</h1>
-        <h2>My name is ${userData.login}!</h2>
+        <h2 class=${userData.colorChoice}>My name is ${userData.login}!</h2>
         <h5>Currently @ ${userData.company}</h5>
         <p><a href=${mMapLocation}>${userData.location}</a></p>
         <p><a href=${userData.html_url}>GitHub</a></p>
@@ -97,7 +130,6 @@ function generateHTML(userData) {
 </body>
 </html>`;
 }
-
 
 promptUser()
   .then(function(answers) {
