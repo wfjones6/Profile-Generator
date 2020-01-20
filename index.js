@@ -6,6 +6,7 @@ const writeFileAsync = util.promisify(fs.writeFile);
 
 var mColor;
 var mData;
+var mMapLocation;
 
 function promptUser() {
   return inquirer.prompt([
@@ -40,6 +41,7 @@ function gitData(answers){
    request(options, (error, response, body) => {
      if (!error && response.statusCode == 200) {
         mData = JSON.parse(body);
+        mMapLocation = "http://www.google.com/maps/place/" + mData.location;
         const html = generateHTML(mData);
         return writeFileAsync("index.html", html);
      }
@@ -65,7 +67,7 @@ function generateHTML(answers) {
         <h1>Hi!</h1>
         <h2>My name is ${answers.login}!</h2>
         <h5>Currently @ ${answers.company}</h5>
-        <p>${answers.location}</p>
+        <p><a href=${mMapLocation}>${answers.location}</a></p>
         <p><a href=${answers.html_url}>GitHub</a></p>
         <p><a href=${answers.blog}>Blog</a></p>
     </header>
