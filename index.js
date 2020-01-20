@@ -62,7 +62,7 @@ function generateHTML(answers) {
 <body>
     <header>
         <div class="wrapper">
-        <img src=${answers.avatar_url} alt="Profile Image">
+        <img src=${answers.avatar_url} alt="Profile Image" style="width:150px;height:150px;">
         </div>
         <h1>Hi!</h1>
         <h2>My name is ${answers.login}!</h2>
@@ -72,7 +72,7 @@ function generateHTML(answers) {
         <p><a href=${answers.blog}>Blog</a></p>
     </header>
     <main>
-        <h2>${answers.bio}</h2>
+        <h3>${answers.bio}</h3>
         <div class="card">
             <h3>Public Repositories</h3>
             <h4>${answers.public_repos}</h4>
