@@ -48,7 +48,7 @@ function gitData(answers){
    });
 }
 
-function generateHTML(answers) {
+function generateHTML(userData) {
   return `
 <!DOCTYPE html>
 <html lang="en">
@@ -62,35 +62,35 @@ function generateHTML(answers) {
 <body>
     <header>
         <div class="wrapper">
-        <img src=${answers.avatar_url} alt="Profile Image" style="width:150px;height:150px;">
+        <img src=${userData.avatar_url} alt="Profile Image" style="width:150px;height:150px;">
         </div>
         <h1>Hi!</h1>
-        <h2>My name is ${answers.login}!</h2>
-        <h5>Currently @ ${answers.company}</h5>
-        <p><a href=${mMapLocation}>${answers.location}</a></p>
-        <p><a href=${answers.html_url}>GitHub</a></p>
-        <p><a href=${answers.blog}>Blog</a></p>
+        <h2>My name is ${userData.login}!</h2>
+        <h5>Currently @ ${userData.company}</h5>
+        <p><a href=${mMapLocation}>${userData.location}</a></p>
+        <p><a href=${userData.html_url}>GitHub</a></p>
+        <p><a href=${userData.blog}>Blog</a></p>
     </header>
     <main>
-        <h3>${answers.bio}</h3>
+        <h3>${userData.bio}</h3>
         <div class="card">
             <h3>Public Repositories</h3>
-            <h4>${answers.public_repos}</h4>
+            <h4>${userData.public_repos}</h4>
         </div>
 
         <div class="card">
                 <h3>Followers</h3>
-                <h4>${answers.followers}</h4>
+                <h4>${userData.followers}</h4>
         </div>
 
         <div class="card">
                 <h3>GitHub Stars</h3>
-                <h4>${answers.public_gists}</h4>
+                <h4>${userData.public_gists}</h4>
         </div>
 
         <div class="card">
                 <h3>Following</h3>
-                <h4>${answers.following}</h4>
+                <h4>${userData.following}</h4>
         </div>
 
     </main>
