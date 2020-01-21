@@ -63,6 +63,7 @@ function generateHTML(userData) {
   <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"/>
     <title>Profile Generator</title>
 </head>
 
@@ -90,46 +91,97 @@ function generateHTML(userData) {
       color: white;
       padding: 10px
   }
+
+   h1 {text-align:center;}
+   h2 {
+      text-align:center;
+   }
+   h4 {text-align:center;}
+
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: ${userData.colorChoice};
+}
+
+li {
+  float: left;
+}
+
+li a {
+  display: block;
+  color: white;
+  text-align: center;
+  padding: 16px;
+  text-decoration: none;
+}
+
+li a:hover {
+  background-color: #111111;
+}
 </style>
 
 <body>
+  <div class="jumbotron jumbotron-fluid">
+   <div class="container">
     <header>
-        <div class="wrapper">
-        <img src=${userData.avatar_url} alt="Profile Image" style="width:150px;height:150px;">
-        </div>
-        <h1>Hi!</h1>
+        <div class="wrapper" style="background-color:${userData.colorChoice};">
+        <img src=${userData.avatar_url} class="rounded-circle mx-auto d-block" alt="Profile Image" style="width:150px;height:150px;">
+
+        <h1 class=${userData.colorChoice}>Hi!</h1>
         <h2 class=${userData.colorChoice}>My name is ${userData.login}!</h2>
-        <h5>Currently @ ${userData.company}</h5>
-        <p><a href=${mMapLocation}>${userData.location}</a></p>
-        <p><a href=${userData.html_url}>GitHub</a></p>
-        <p><a href=${userData.blog}>Blog</a></p>
+        <h4 class=${userData.colorChoice}>Currently @ ${userData.company}</h4>
+
+        <ul>
+          <li><a href=${mMapLocation}>${userData.location}</a></li>
+          <li><a href=${userData.html_url}>GitHub</a></li>
+          <li><a href=${userData.blog}>Blog</a></li>
+        </ul>
+        </div>
     </header>
     <main>
+        </br>
         <h3>${userData.bio}</h3>
-        <div class="card">
-            <h3>Public Repositories</h3>
-            <h4>${userData.public_repos}</h4>
-        </div>
+        </br>
 
-        <div class="card">
-                <h3>Followers</h3>
-                <h4>${userData.followers}</h4>
-        </div>
-
-        <div class="card">
-                <h3>GitHub Stars</h3>
-                <h4>${userData.public_gists}</h4>
-        </div>
-
-        <div class="card">
-                <h3>Following</h3>
-                <h4>${userData.following}</h4>
+        <div class="container">
+          <div class="card-columns">
+            <div class="card" style="background-color:${userData.colorChoice};">
+              <div class="card-body text-center">
+                <h3 class=${userData.colorChoice}>Public Repositories</h3>
+                <h4 class=${userData.colorChoice}>${userData.public_repos}</h4>
+              </div>
+            </div>
+            <div class="card" style="background-color:${userData.colorChoice};">
+              <div class="card-body text-center">
+                <h3 class=${userData.colorChoice}>Followers</h3>
+                <h4 class=${userData.colorChoice}>${userData.followers}</h4>
+              </div>
+            </div>
+            <div class="card" style="background-color:${userData.colorChoice};">
+              <div class="card-body text-center">
+                <h3 class=${userData.colorChoice}>GitHub Stars</h3>
+                <h4 class=${userData.colorChoice}>${userData.public_gists}</h4>
+              </div>
+            </div>  
+            <div class="card" style="background-color:${userData.colorChoice};">
+              <div class="card-body text-center">
+                <h3 class=${userData.colorChoice}>Following</h3>
+                <h4 class=${userData.colorChoice}>${userData.following}</h4>
+              </div>
+            </div>
+          </div>
         </div>
 
     </main>
+   </div>
+  </div>
 </body>
 </html>`;
 }
+
 
 promptUser()
   .then(function(answers) {
